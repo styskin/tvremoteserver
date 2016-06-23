@@ -28,8 +28,8 @@ var memcachedPort = process.env.MEMCACHE_PORT_11211_TCP_PORT || '11211';
 var memcached = new Memcached(memcachedAddr + ':' + memcachedPort);
 
 app.post('/tv', function(request, response, next){
-    console.log('URL: ' + request.body.url);
-    memcached.set(user, request.body.url, 60, function (err) {
+    console.log('URL: ' + JSON.stringify(request.body));
+    memcached.set(user, request.body, 60, function (err) {
       if (err) {
         return next(err);
       }

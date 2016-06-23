@@ -6,7 +6,12 @@ html
                 $.ajax({
                     url: "gettv",
                 }).done(function(data) {
-                    $("#tit").attr("href", data);
+                    console.log(JSON.stringify(data));
+                    if (data.force == "1") {
+                        $(location).attr('href', data.url);
+                    } else {
+                        $("#tit").attr("href", data.url);
+                    }
                 });
             }, 3000);
     body
