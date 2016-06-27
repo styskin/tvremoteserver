@@ -61,7 +61,7 @@ app.get('/link', function (req, res, next) {
     memcached.del("tv-" + id, function (err) {
     });
     console.log(id);
-    // GET GOOGLE URL ON FLY
+    // TODO: pass only /register?tv= handler
     var url = "https://tvremote-1334.appspot.com/register?tv=" + id;
     var code = qr.imageSync(url, { type: 'png' });
     res.render('link', {data : "data:image/png;base64, " + code.toString('base64')});
