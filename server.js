@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+var TIMEOUT = 60*60*24*60;
 var current = "NODATA";
 // The environment variables are automatically set by App Engine when running
 // on GAE. When running locally, you should have a local instance of the
@@ -33,7 +34,7 @@ app.post('/tv', function(request, response, next){
     console.log('URL: ' + JSON.stringify(request.body));
     var remoteid = "remote-" + request.cookies.device;
     console.log("SET " + remoteid);
-    memcached.set(remoteid, request.body, 60*60*600, function (err) {
+    memcached.set(remoteid, request.body, TIMEOUT, function (err) {
       if (err) {
         return next(err);
       }
@@ -52,6 +53,7 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/link', function (req, res, next) {
+    // TODO: get persistant id and tmp code
     var id = Math.floor((Math.random() * 1000) + 1).toString();
     if (req.cookies.tvid) {
         id = req.cookies.tvid;
@@ -61,10 +63,9 @@ app.get('/link', function (req, res, next) {
     memcached.del("tv-" + id, function (err) {
     });
     console.log(id);
-    // TODO: pass only /register?tv= handler
-    var url = "https://tvremote-1334.appspot.com/register?tv=" + id;
+    var url = id;
     var code = qr.imageSync(url, { type: 'png' });
-    res.render('link', {data : "data:image/png;base64, " + code.toString('base64')});
+    res.render('link', {data : "data:image/png;base64, " + code.toString('base64'), id: url});
 });
 
 app.post('/register', function (req, res, next) {
@@ -74,7 +75,7 @@ app.post('/register', function (req, res, next) {
         var key = "tv-" + req.query.tv;
         // BIND req.query.tv  --> req.cookies.device
         console.log(key + "=" + req.cookies.device);
-        memcached.set(key, req.cookies.device, 60*60*600, function (err) {
+        memcached.set(key, req.cookies.device, TIMEOUT, function (err) {
             if (err) {
                 return next(err);
             }
@@ -113,7 +114,7 @@ app.get('/gettv', function (req, res, next) {
                         send(res, data);
                         if (data.force == "1") {
                             data.force = "0";
-                            memcached.set(remoteid, data, 60*60*600, function (err) {
+                            memcached.set(remoteid, data, TIMEOUT, function (err) {
                             });
                         }
                     } else {
