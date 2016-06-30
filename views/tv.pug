@@ -5,6 +5,7 @@ html
             setInterval(function () {
                 $.ajax({
                     url: "gettv",
+                    timeout: 2000
                 }).done(function(data) {
                     console.log(JSON.stringify(data));
                     if (data.force == "1") {

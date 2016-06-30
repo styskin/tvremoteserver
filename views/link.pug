@@ -5,6 +5,7 @@ html
             setInterval(function () {
                 $.ajax({
                     url: "gettv",
+                    timeout: 2000
                 }).done(function(data) {
                     console.log("HERE");
                     if (data.url) {
@@ -17,3 +18,4 @@ html
  
     body
         img(src=data, id="qrcode", height="80%", align="middle")
+        h3=tvid 

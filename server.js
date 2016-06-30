@@ -65,7 +65,7 @@ app.get('/link', function (req, res, next) {
     console.log(id);
     var url = id;
     var code = qr.imageSync(url, { type: 'png' });
-    res.render('link', {data : "data:image/png;base64, " + code.toString('base64'), id: url});
+    res.render('link', {data : "data:image/png;base64, " + code.toString('base64'), tvid: url});
 });
 
 app.post('/register', function (req, res, next) {
