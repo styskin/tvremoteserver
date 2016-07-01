@@ -6,7 +6,7 @@
 var express = require('express');
 var qr = require('qr-image');
 var app = express();
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 var kvstore = require('gcloud-kvstore');
 var gcloud = require('gcloud')({
