@@ -15,9 +15,10 @@
   "dependencies": {
     "express": "^4.13.4",
     "body-parser": "^1.14.2",
-    "memcached": "^2.2.1",
     "qr-image": "*",
     "cookie-parser": "*",
+    "gcloud": "*",
+    "gcloud-kvstore": "*",
     "pug": "^0.1.0"
   }
 }
