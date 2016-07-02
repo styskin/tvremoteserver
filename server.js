@@ -49,7 +49,8 @@ app.post('/tv', function(request, response, next){
 app.get('/', function (req, res, next) {
     if (req.cookies.tvid) {
         console.log("TV");
-        res.render('tv', {title : "NODATA"});
+        //res.render('tv', {title : "NODATA"});
+        res.redirect('/main.html');
     } else {
         console.log("REDIRECT");
         res.redirect('/link');
