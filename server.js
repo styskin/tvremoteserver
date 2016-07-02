@@ -49,7 +49,6 @@ app.post('/tv', function(request, response, next){
 app.get('/', function (req, res, next) {
     if (req.cookies.tvid) {
         console.log("TV");
-        //res.render('tv', {title : "NODATA"});
         res.redirect('/main.html');
     } else {
         console.log("REDIRECT");
@@ -59,7 +58,7 @@ app.get('/', function (req, res, next) {
 
 app.get('/link', function (req, res, next) {
     // TODO: get persistant id and tmp code
-    var id = Math.floor((Math.random() * 1000) + 1).toString();
+    var id = Date.now().toString() + Math.floor((Math.random() * 1000) + 1).toString();
     if (req.cookies.tvid) {
         id = req.cookies.tvid;
     } else {
